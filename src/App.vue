@@ -30,6 +30,12 @@ import { defineComponent } from 'vue'
 import ContactList from './components/contact_list.vue'
 import ContactForm from './components/contact_form.vue'
 
+interface Contact {
+  name: string
+  email: string
+  number: string
+}
+
 export default defineComponent({
   name: 'App',
 
@@ -41,7 +47,6 @@ export default defineComponent({
   data () {
     return {
       contacts: [{
-        id: 1,
         name: 'Rafael Silva',
         email: 'rafaelfsilva1@gmail.com',
         number: '(12) 1234-5678'
@@ -50,7 +55,7 @@ export default defineComponent({
   },
 
   methods: {
-    addToContacts (contact) {
+    addToContacts (contact: Contact) {
       this.contacts.push({ ...contact })
     }
   }
