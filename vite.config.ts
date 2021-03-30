@@ -8,7 +8,16 @@ export default defineConfig({
     vue(),
     ViteFonts({
       google: {
-        families: ['Merriweather', 'Merriweather Sans']
+        families: [
+          {
+            name: 'Merriweather',
+            styles: 'wght@400;700'
+          },
+          {
+            name: 'Merriweather Sans',
+            styles: 'wght@400;700'
+          }
+        ]
       }
     })
   ]

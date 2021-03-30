@@ -5,7 +5,7 @@
         <div class="px-4 sm:px-0">
           <h3 class="text-lg leading-6 text-gray-900">Add a new contact</h3>
           <p class="mt-1 text-sm text-gray-600">
-            Fill in the fields, the contact will be saved in your browser session.
+            Fill in the fields, the contact will be saved in your browser cookies.
           </p>
         </div>
       </div>
@@ -69,8 +69,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
+
+interface ContactFormModel {
+  name: string
+  email: string
+  number: string
+}
 
 const initialModel = {
   name: '',
@@ -83,9 +89,7 @@ export default defineComponent({
 
   data () {
     return {
-      model: {
-        ...initialModel
-      }
+      model: { ...initialModel } as ContactFormModel
     }
   },
 
@@ -98,7 +102,10 @@ export default defineComponent({
       valid = emailPattern.test(this.model.email)
 
       if (valid) {
-        this.$emit('add', this.model)
+        this.$emit('add', {
+          id: Date.now(),
+          ...this.model
+        })
         this.model = { ...initialModel }
       }
     }
