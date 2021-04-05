@@ -91,7 +91,7 @@ export default defineComponent({
 </script>
 
 <style>
-  body {
-    background-color: theme("colors.green.50");
-  }
+body {
+  background-color: theme("colors.green.50");
+}
 </style>

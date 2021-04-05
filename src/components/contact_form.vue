@@ -52,6 +52,19 @@
                     />
                   </label>
                 </div>
+
+                <div class="col-span-6 sm:col-span-6">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Photo URL
+                    <input
+                      required
+                      type="text"
+                      autocomplete="off"
+                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      v-model="model.photo"
+                    />
+                  </label>
+                </div>
               </div>
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -76,12 +89,14 @@ interface ContactFormModel {
   name: string
   email: string
   number: string
+  photo: string
 }
 
 const initialModel = {
   name: '',
   number: '',
-  email: ''
+  email: '',
+  photo: ''
 }
 
 export default defineComponent({
@@ -94,11 +109,16 @@ export default defineComponent({
   },
 
   methods: {
-    submit () {
+    submit (): void {
       const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       let valid = false
 
-      valid = Boolean(this.model.name && this.model.number && this.model.email)
+      valid = Boolean(
+        this.model.name
+        && this.model.number
+        && this.model.email
+        && this.model.photo
+      )
       valid = emailPattern.test(this.model.email)
 
       if (valid) {
