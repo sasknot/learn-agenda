@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import Cookies from 'js-cookie'
+import { Cookies } from 'typescript-cookie'
 import { defineComponent } from 'vue'
 import ContactList from './components/contact_list.vue'
 import ContactForm from './components/contact_form.vue'
