@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [
     vue(),
     webfontDownload([
-      'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Merriweather+Sans:wght@400;700&display=swap'
+      'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&display=swap'
     ])
   ]
 })
