@@ -28,15 +28,15 @@
 <script lang="ts">
 import { Cookies } from 'typescript-cookie'
 import { defineComponent } from 'vue'
-import ContactList from './components/contact_list.vue'
-import ContactForm from './components/contact_form.vue'
+import ContactList from './components/contact-list.vue'
+import ContactForm from './components/contact-form.vue'
 
 const cookiesManager = Cookies.withConverter({
-  read (value: string): any {
+  read (value: string): unknown {
     return value ? JSON.parse(value) : value
   },
 
-  write <T>(value: T) {
+  write <T> (value: T) {
     return JSON.stringify(value).replace(/\\"/g, '"')
   }
 })
@@ -62,6 +62,14 @@ export default defineComponent({
     }
   },
 
+  created (): void {
+    const agenda = cookiesManager.get('agenda') as Contact[]
+
+    if (agenda && agenda.length) {
+      this.contacts = agenda
+    }
+  },
+
   methods: {
     addToContacts (contact: Contact): void {
       this.contacts.push({ ...contact })
@@ -77,14 +85,6 @@ export default defineComponent({
         this.contacts = [...newContacts]
         cookiesManager.set('agenda', newContacts, { expires: 30 })
       }
-    }
-  },
-
-  created (): void {
-    const agenda = cookiesManager.get('agenda') as any as Contact[]
-
-    if (agenda && agenda.length) {
-      this.contacts = agenda
     }
   }
 })
