@@ -35,7 +35,24 @@ type Contact = {
   name: string
   email: string
   number: string
+  photo: string
 }
+
+// async function fileFromUrl (url: string): Promise<Blob> {
+//   const xhr = new XMLHttpRequest()
+
+//   return new Promise((resolve, reject) => {
+//     xhr.addEventListener('load', async () => {
+//       resolve(xhr.response)
+//     })
+//     xhr.addEventListener('error', () => {
+//       reject(xhr.response)
+//     })
+//     xhr.open('GET', url)
+//     xhr.responseType = 'blob'
+//     xhr.send()
+//   })
+// }
 
 export default defineComponent({
   name: 'App',
@@ -66,7 +83,12 @@ export default defineComponent({
   },
 
   methods: {
-    addToContacts (contact: Contact): void {
+    async addToContacts (contact: Contact): Promise<void> {
+      // @TODO: resize image
+      // const file = await fileFromUrl(contact.photo)
+      // console.log('newPhotoUrl', URL.createObjectURL(file))
+      // contact.photo = URL.createObjectURL(file)
+
       this.contacts.push({ ...contact })
       localStorage.setItem('agenda', JSON.stringify(this.contacts))
     },
