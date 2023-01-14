@@ -26,29 +26,18 @@
 </template>
 
 <script lang="ts">
-import { Cookies } from 'typescript-cookie'
 import { defineComponent } from 'vue'
 import ContactList from './components/contact-list.vue'
 import ContactForm from './components/contact-form.vue'
 
-const cookiesManager = Cookies.withConverter({
-  read (value: string): unknown {
-    return value ? JSON.parse(value) : value
-  },
-
-  write <T> (value: T) {
-    return JSON.stringify(value).replace(/\\"/g, '"')
-  }
-})
-
-interface Contact {
+type Contact = {
   id: number
   name: string
   email: string
   number: string
 }
 
-export default defineComponent({
+export default defineComponent<{ contacts: Contact[] }>({
   name: 'App',
 
   components: {
@@ -58,22 +47,28 @@ export default defineComponent({
 
   data () {
     return {
-      contacts: [] as Contact[]
+      contacts: []
     }
   },
 
   created (): void {
-    const agenda = cookiesManager.get('agenda') as Contact[]
+    let agenda = []
 
-    if (agenda && agenda.length) {
-      this.contacts = agenda
-    }
+    try {
+      agenda = JSON.parse(localStorage.getItem('agenda') || '[]')
+
+      if (!Array.isArray(agenda)) {
+        agenda = []
+      }
+    } catch {}
+
+    this.contacts = agenda
   },
 
   methods: {
     addToContacts (contact: Contact): void {
       this.contacts.push({ ...contact })
-      cookiesManager.set('agenda', [...this.contacts], { expires: 30 })
+      localStorage.setItem('agenda', JSON.stringify(this.contacts))
     },
 
     removeFromContacts (removedId: number): void {
@@ -83,7 +78,7 @@ export default defineComponent({
         })
 
         this.contacts = [...newContacts]
-        cookiesManager.set('agenda', newContacts, { expires: 30 })
+        localStorage.setItem('agenda', JSON.stringify(this.contacts))
       }
     }
   }
