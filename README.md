@@ -31,7 +31,7 @@ See [here](https://rafaelfsilva1-agenda.vercel.app/)
 
 ### What I will try to do henceforth?
 
-#### Use Vite + Vue 3:
+#### Use Vite + Vue 3
 Best stack, ever! Vite is super fast.
 
 #### Use Vue 3 Composition API

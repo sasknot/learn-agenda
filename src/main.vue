@@ -37,7 +37,7 @@ type Contact = {
   number: string
 }
 
-export default defineComponent<{ contacts: Contact[] }>({
+export default defineComponent({
   name: 'App',
 
   components: {
@@ -48,7 +48,7 @@ export default defineComponent<{ contacts: Contact[] }>({
   data () {
     return {
       contacts: []
-    }
+    } as { contacts: Contact[] }
   },
 
   created (): void {
