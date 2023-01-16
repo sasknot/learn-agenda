@@ -2,23 +2,15 @@
 
 Built with [Vue 3](https://vuejs.org/) + [Typescript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/) + [Tailwind](https://tailwindcss.com/)
 
+See [demo](https://rafaelfsilva1-agenda.vercel.app/)
+
 ## Development
 
-```bash
-npm run dev
-```
+`npm run dev`
 
 ## Production
 
-```bash
-npm run build
-```
-
-Files will be at `dist` folder
-
-## Demo
-
-See [here](https://rafaelfsilva1-agenda.vercel.app/)
+`npm run build` and files will be at `dist` folder
 
 ## Results
 
