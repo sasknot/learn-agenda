@@ -1,8 +1,8 @@
 # Learn: Agenda
 
-Built with [Vue 3](https://vuejs.org/) + [Typescript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/) + [Tailwind](https://tailwindcss.com/)
+Built with [Vite](https://vitejs.dev) + [Vue 3](https://vuejs.org) + [TypeScript](https://www.typescriptlang.org) + [Tailwind](https://tailwindcss.com)
 
-See [demo](https://rafaelfsilva1-agenda.vercel.app/)
+See [demo](https://rafaelfsilva1-agenda.vercel.app)
 
 ## Development
 
