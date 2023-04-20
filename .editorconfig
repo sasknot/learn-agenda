@@ -1,3 +1,4 @@
+# http://editorconfig.org
 root = true
 
 [*]
@@ -8,13 +9,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.json]
-insert_final_newline = ignore
-
-[*.md]
-trim_trailing_whitespace = false
-
-[*.txt]
+[*.{md,txt}]
 trim_trailing_whitespace = false
 indent_style = ignore
 insert_final_newline = ignore

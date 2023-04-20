@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -30,5 +31,12 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 8080,
     open: false
+  },
+
+  test: {
+    globals: false,
+    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts}'],
+    environment: 'jsdom',
+    reporters: ['verbose']
   }
 })
