@@ -1,3 +1,21 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ContactList',
+
+  props: {
+    items: Object
+  },
+
+  methods: {
+    remove (id: number): void {
+      this.$emit('remove', id)
+    }
+  }
+})
+</script>
+
 <template>
   <div
     v-if="items && items.length"
@@ -59,21 +77,3 @@
     No contact registered yet, please use the form below to register one.
   </p>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'ContactList',
-
-  props: {
-    items: Object
-  },
-
-  methods: {
-    remove (id: number): void {
-      this.$emit('remove', id)
-    }
-  }
-})
-</script>

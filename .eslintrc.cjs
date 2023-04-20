@@ -1,3 +1,4 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
   env: {
@@ -18,8 +19,7 @@ module.exports = {
   ],
   extends: [
     'eslint:recommended',
-    'standard',
-    // 'plugin:node/recommended',
+    // 'plugin:n/recommended',
     // 'plugin:promise/recommended'
     // 'plugin:import/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -49,6 +49,7 @@ module.exports = {
       ignoreStrings: true,
       ignoreRegExpLiterals: true
     }],
+    'comma-dangle': ['warn'],
 
     'filenames-simple/extension': 'error',
     'filenames-simple/named-export': ['warn', 'singular'],
@@ -57,15 +58,15 @@ module.exports = {
     'filenames-simple/pluralize': 'off',
     'filenames-simple/typescript-module-declaration': 'off',
 
-    // 'node/exports-style': ['error', 'module.exports'],
-    // 'node/file-extension-in-import': ['error', 'always'],
-    // 'node/prefer-global/buffer': ['error', 'always'],
-    // 'node/prefer-global/console': ['error', 'always'],
-    // 'node/prefer-global/process': ['error', 'always'],
-    // 'node/prefer-global/url-search-params': ['error', 'always'],
-    // 'node/prefer-global/url': ['error', 'always'],
-    // 'node/prefer-promises/dns': 'error',
-    // 'node/prefer-promises/fs': 'error'
+    // 'n/exports-style': ['error', 'module.exports'],
+    // 'n/file-extension-in-import': ['error', 'always'],
+    // 'n/prefer-global/buffer': ['error', 'always'],
+    // 'n/prefer-global/console': ['error', 'always'],
+    // 'n/prefer-global/process': ['error', 'always'],
+    // 'n/prefer-global/url-search-params': ['error', 'always'],
+    // 'n/prefer-global/url': ['error', 'always'],
+    // 'n/prefer-promises/dns': 'error',
+    // 'n/prefer-promises/fs': 'error'
 
     // 'promise/always-return': 'error',
     // 'promise/no-return-wrap': 'error',
@@ -110,13 +111,15 @@ module.exports = {
 
     // https://eslint.vuejs.org/rules/
     'vue/require-default-prop': 'off',
-    'vue/component-definition-name-casing': 'off', // should be: ['error', 'PascalCase'],
+    'vue/component-definition-name-casing': ['error', 'PascalCase'],
     'vue/max-attributes-per-line': 'off',
     'vue/html-self-closing': 'off',
     'vue/attributes-order': 'off',
     'vue/singleline-html-element-content-newline': 'off',
-    'vue/component-tags-order': ['error', { order: ['template', 'script', 'style'] }],
+    'vue/component-tags-order': ['error', { order: ['script', 'template', 'style'] }],
     'vue/attribute-hyphenation': 'off',
-    'vue/no-reserved-props': ['error', { vueVersion: 2 }]
+    'vue/no-reserved-props': ['error', { vueVersion: 3 }],
+    'vue/no-multiple-template-root': ['warn'],
+    'vue/multi-word-component-names': 'off'
   }
 }

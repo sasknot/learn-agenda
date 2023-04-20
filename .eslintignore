@@ -1,9 +1,7 @@
-# Editor directories and files
+.eslintrc.cjs
+.stylelintrc.js
+
 .idea
 .vscode
-
-# app files
 node_modules
 dist
-.eslintrc.js
-.stylelintrc.js

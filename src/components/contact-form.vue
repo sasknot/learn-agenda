@@ -1,3 +1,56 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+interface ContactFormModel {
+  name: string
+  email: string
+  number: string
+  photo: string
+}
+
+const initialModel = {
+  name: '',
+  number: '',
+  email: '',
+  photo: ''
+}
+
+export default defineComponent({
+  name: 'ContactForm',
+
+  data () {
+    return {
+      model: { ...initialModel } as ContactFormModel
+    }
+  },
+
+  methods: {
+    submit (): void {
+      const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const urlPattern = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
+      let valid = false
+
+      valid = Boolean(
+        this.model.name
+        && this.model.number
+        && this.model.email
+        && this.model.photo
+      )
+      valid = emailPattern.test(this.model.email)
+      valid = urlPattern.test(this.model.photo)
+
+      if (valid) {
+        this.$emit('add', {
+          id: Date.now(),
+          ...this.model
+        })
+        this.model = { ...initialModel }
+      }
+    }
+  }
+})
+</script>
+
 <template>
   <div class="mt-10 sm:mt-0">
     <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -98,56 +151,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-interface ContactFormModel {
-  name: string
-  email: string
-  number: string
-  photo: string
-}
-
-const initialModel = {
-  name: '',
-  number: '',
-  email: '',
-  photo: ''
-}
-
-export default defineComponent({
-  name: 'ContactForm',
-
-  data () {
-    return {
-      model: { ...initialModel } as ContactFormModel
-    }
-  },
-
-  methods: {
-    submit (): void {
-      const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      const urlPattern = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
-      let valid = false
-
-      valid = Boolean(
-        this.model.name
-        && this.model.number
-        && this.model.email
-        && this.model.photo
-      )
-      valid = emailPattern.test(this.model.email)
-      valid = urlPattern.test(this.model.photo)
-
-      if (valid) {
-        this.$emit('add', {
-          id: Date.now(),
-          ...this.model
-        })
-        this.model = { ...initialModel }
-      }
-    }
-  }
-})
-</script>
