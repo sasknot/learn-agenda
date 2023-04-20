@@ -4,13 +4,26 @@ Built with [Vite](https://vitejs.dev) + [Vue 3](https://vuejs.org) + [TypeScript
 
 See [demo](https://rafaelfsilva1-agenda.vercel.app)
 
+## Requirements
+
+- [NodeJS](https://nodejs.org)
+
+## Initial setup
+
+Run `npm ci`, it will download all required packages under `node_modules` directory
+
 ## Development
 
-`npm run dev`
+Run `npm run dev`, app will be available at [localhost:8080](http://localhost:8080)
+
+## Lint
+
+- Run `npm run lint`, `errors` and `warns` will be pointed in terminal if they exists
+- Run `npm run lint:fix`, eslint will try to fix all `errors` and `warns` and point the ones it couldn't fix
 
 ## Production
 
-`npm run build` and files will be at `dist` folder
+Run `npm run build` and files will be at `dist` folder
 
 ## Results
 
