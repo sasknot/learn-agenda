@@ -1,17 +1,21 @@
 <script lang="ts">
+import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'ContactList',
-
   props: {
-    items: Object
+    items: {
+      type: Array as PropType<any[]>,
+      default: () => []
+    }
   },
 
-  methods: {
-    remove (id: number): void {
-      this.$emit('remove', id)
+  setup (_, { emit }) {
+    function remove (id: number): void {
+      emit('remove', id)
     }
+
+    return { remove }
   }
 })
 </script>

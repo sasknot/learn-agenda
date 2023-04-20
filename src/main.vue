@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onBeforeMount } from 'vue'
 import ContactList from './components/contact-list.vue'
 import ContactForm from './components/contact-form.vue'
 
@@ -28,56 +28,48 @@ type Contact = {
 // }
 
 export default defineComponent({
-  name: 'App',
+  components: { ContactList, ContactForm },
 
-  components: {
-    ContactList,
-    ContactForm
-  },
+  setup () {
+    const contacts = ref<Contact[]>([])
 
-  data () {
-    return {
-      contacts: []
-    } as { contacts: Contact[] }
-  },
-
-  created (): void {
-    let agenda = []
-
-    try {
-      agenda = JSON.parse(localStorage.getItem('agenda') || '[]')
-
-      if (!Array.isArray(agenda)) {
-        agenda = []
-      }
-    } catch {
-      // ...
-    }
-
-    this.contacts = agenda
-  },
-
-  methods: {
-    async addToContacts (contact: Contact): Promise<void> {
+    async function addToContacts (contact: Contact): Promise<void> {
       // @TODO: resize image
       // const file = await fileFromUrl(contact.photo)
       // console.log('newPhotoUrl', URL.createObjectURL(file))
       // contact.photo = URL.createObjectURL(file)
 
-      this.contacts.push({ ...contact })
-      localStorage.setItem('agenda', JSON.stringify(this.contacts))
-    },
-
-    removeFromContacts (removedId: number): void {
+      contacts.value.push({ ...contact })
+      localStorage.setItem('agenda', JSON.stringify(contacts.value))
+    }
+    function removeFromContacts (removedId: number): void {
       if (removedId) {
-        const newContacts = this.contacts.filter((contact: Contact) => {
+        const newContacts = contacts.value.filter((contact: Contact) => {
           return contact.id !== removedId
         })
 
-        this.contacts = [...newContacts]
-        localStorage.setItem('agenda', JSON.stringify(this.contacts))
+        contacts.value = [...newContacts]
+        localStorage.setItem('agenda', JSON.stringify(contacts.value))
       }
     }
+
+    onBeforeMount(() => {
+      let agenda = []
+
+      try {
+        agenda = JSON.parse(localStorage.getItem('agenda') || '[]')
+
+        if (!Array.isArray(agenda)) {
+          agenda = []
+        }
+      } catch {
+        // ...
+      }
+
+      contacts.value = agenda
+    })
+
+    return { contacts, addToContacts, removeFromContacts }
   }
 })
 </script>
