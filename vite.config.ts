@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import path from 'node:path'
 import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import vue from '@vitejs/plugin-vue'
 import eslint from '@nabla/vite-plugin-eslint'
 
@@ -13,6 +14,7 @@ export default defineConfig({
 
   plugins: [
     vue(),
+    tsconfigPaths({ loose: true }),
     eslint({
       eslintOptions: {
         cache: true,
