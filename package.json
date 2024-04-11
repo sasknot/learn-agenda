@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
-    "vue": "^3.4.21"
+    "@vee-validate/zod": "^4.12.6",
+    "vee-validate": "^4.12.6",
+    "vue": "^3.4.21",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@nabla/vite-plugin-eslint": "^2.0.2",

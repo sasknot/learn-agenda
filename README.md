@@ -33,6 +33,7 @@ Run `npm run build` and files will be at `dist` folder
 - Usage of TailwindCSS
 - Vue 3 Composition API
 - Better cookie/localStorage data store
+- Usage of VeeValidate
 
 ### What I will try to do henceforth?
 

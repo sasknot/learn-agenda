@@ -1,45 +1,50 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-interface ContactFormModel {
-  name: string
-  email: string
-  number: string
-  photo: string
-}
-
-const initialModel = {
-  name: '',
-  number: '',
-  email: '',
-  photo: ''
-}
+import { defineComponent } from 'vue'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { z } from 'zod'
+import { CFormInput } from '@/components'
 
 export default defineComponent({
+  components: { CFormInput },
+
   setup (_, { emit }) {
-    const model = ref<ContactFormModel>({ ...initialModel })
-
-    function submit (): void {
-      const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      const urlPattern = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
-      let valid = false
-
-      valid = Boolean(
-        model.value.name
-        && model.value.number
-        && model.value.email
-        && model.value.photo
+    const { errors, defineField, handleSubmit, resetForm } = useForm({
+      validationSchema: toTypedSchema(
+        z.object({
+          name: z.string().min(1),
+          email: z.string().min(1).email(),
+          number: z.string().min(1),
+          photo: z.string().min(1).url()
+        })
       )
-      valid = emailPattern.test(model.value.email)
-      valid = urlPattern.test(model.value.photo)
-
-      if (valid) {
-        emit('add', { id: Date.now(), ...model.value })
-        model.value = { ...initialModel }
+    })
+    const [name, nameAttrs] = defineField('name')
+    const [email, emailAttrs] = defineField('email', (state) => {
+      return {
+        validateOnModelUpdate: state.errors.length > 0
       }
-    }
+    })
+    const [number, numberAttrs] = defineField('number')
+    const [photo, photoAttrs] = defineField('photo')
 
-    return { model, submit }
+    const submit = handleSubmit((values) => {
+      emit('add', { id: Date.now(), ...values })
+      resetForm()
+    })
+
+    return {
+      submit,
+      errors,
+      name,
+      nameAttrs,
+      email,
+      emailAttrs,
+      number,
+      numberAttrs,
+      photo,
+      photoAttrs
+    }
   }
 })
 </script>
@@ -61,67 +66,39 @@ export default defineComponent({
             <div class="px-4 py-5 bg-white sm:p-6">
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Name
-                    <input
-                      required
-                      type="text"
-                      autocomplete="off"
-                      class="
-                        mt-1 focus:ring-indigo-500 focus:border-indigo-500 block
-                        w-full shadow-sm sm:text-sm border-gray-300 rounded-md
-                      "
-                      v-model="model.name"
-                    />
-                  </label>
+                  <CFormInput
+                    v-model="name"
+                    v-bind="nameAttrs"
+                    label="Name"
+                    :isInvalid="Boolean(errors.name)"
+                  />
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Phone number
-                    <input
-                      required
-                      type="text"
-                      autocomplete="off"
-                      class="
-                        mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full
-                        shadow-sm sm:text-sm border-gray-300 rounded-md
-                      "
-                      v-model="model.number"
-                    />
-                  </label>
+                  <CFormInput
+                    v-model="number"
+                    v-bind="numberAttrs"
+                    label="Phone number"
+                    :isInvalid="Boolean(errors.number)"
+                  />
                 </div>
 
                 <div class="col-span-6 sm:col-span-6">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Email address
-                    <input
-                      required
-                      type="email"
-                      autocomplete="off"
-                      class="
-                        mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full
-                        shadow-sm sm:text-sm border-gray-300 rounded-md
-                      "
-                      v-model="model.email"
-                    />
-                  </label>
+                  <CFormInput
+                    v-model="email"
+                    v-bind="emailAttrs"
+                    label="Email address"
+                    :isInvalid="Boolean(errors.email)"
+                  />
                 </div>
 
                 <div class="col-span-6 sm:col-span-6">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Photo URL
-                    <input
-                      required
-                      type="text"
-                      autocomplete="off"
-                      class="
-                        mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full
-                        shadow-sm sm:text-sm border-gray-300 rounded-md
-                      "
-                      v-model="model.photo"
-                    />
-                  </label>
+                  <CFormInput
+                    v-model="photo"
+                    v-bind="photoAttrs"
+                    label="Photo URL"
+                    :isInvalid="Boolean(errors.photo)"
+                  />
                 </div>
               </div>
             </div>
